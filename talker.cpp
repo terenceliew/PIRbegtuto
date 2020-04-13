@@ -2,6 +2,12 @@
 #include "std_msgs/String.h"
 
 #include <sstream>
+#include <iostream>
+#include <string>
+
+unsigned int value = 10  ;
+unsigned int cpt = 0 ;
+
 
 /**
  * This tutorial demonstrates simple sending of messages over the ROS system.
@@ -46,7 +52,7 @@ int main(int argc, char **argv)
    */
   ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
 
-  ros::Rate loop_rate(10);
+  ros::Rate loop_rate(0.5);
 
   /**
    * A count of how many messages we have sent. This is used to create
@@ -62,9 +68,24 @@ int main(int argc, char **argv)
 
     std::stringstream ss;
     //ss << "test" << count;
-    std::cout << "Enter a value : " ;
-    std::cin >> msg.data ; 
-    std::cout << std::endl ;
+
+    ////// MON CODE POUR GENERER UNE POSITION ALEATOIRE ////////////////////
+    if (cpt==0){
+      value = 15 ; 
+      cpt = 1 ;
+    }
+    else if (cpt == 1) {
+      value = 10 ; 
+      cpt = 0 ;
+    }
+
+
+    //std::cin >> msg.data ; 
+    ss << value ; 
+    std::string val_str = ss.str();
+    msg.data=val_str ; 
+
+
     //msg.data = ss.str();
 
     //ROS_INFO("%s", msg.data.c_str());
